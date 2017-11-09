@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-sm-9 col-sm-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading text-center">Github</div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>Hi, {{OneResumeResponse?.name}}</h3>
+            <p>{{OneResumeResponse?.email}}</p>
+            <ul>
+              <ol>
+                <a [routerLink]="['/github', githubusers?.username]" *ngFor="let githubusers of OneResumeResponse?.githubusers">
+                  <h4>User Name: {{githubusers.username}}</h4>
+                  <p>Name: {{githubusers.name}}</p>
+                  <p>Company: {{githubusers.company}}</p>
+                  <p>Location: {{githubusers.location}}</p>
+                  <p>Public Repositories: {{githubusers.public_repos}}</p>
+                  <p>Public Gists: {{githubusers.Public_gists}}</p>
+                <hr>
+                </a>
+              </ol>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

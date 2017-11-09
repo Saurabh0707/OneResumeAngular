@@ -1,0 +1,142 @@
+<div class="row">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a routerLink="/" class="navbar-brand">TheOneResume</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li routerLinkActive="active">
+            <a routerLink="/profile">Profile<span class="sr-only">(current)</span></a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/github">Github<span class="sr-only">(current)</span></a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/linkedin">LinkedIN</a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/resume">Resume</a>
+          </li>
+          </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <button type="button" class="btn btn-primary" *ngIf="!loggedIn" (click)="onLogin()">Login</button>
+          </li>
+          <li>
+            <button type="button" class="btn btn-primary" *ngIf="loggedIn" (click)="onLogout()">Logout</button>
+          </li>
+          <li>
+            <button type="button" class="btn btn-primary" *ngIf="!loggedIn" (click)="onRegister()">Register</button>
+          </li>
+        </ul>
+        <!--Register Modal -->
+        <div class="modal fade" id="registerModal" role="dialog" #registerModal>
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Register</h4>
+              </div>
+              <div class="modal-body">
+                <div class="panel panel-default">
+                  <div class="panel-heading text-center">Register</div>
+                  <div class="panel-body">
+                    <div class="col-sm-6">
+                      <form [formGroup]="registerForm" class="form-horizontal" (ngSubmit)="onSubmitRegister()">
+                        <div class="form-group">
+                          <label class="control-label col-sm-2" for="registerEmail">Email:</label>
+                          <div class="col-sm-10">
+                            <input type="email" class="form-control" id="registerEmail" placeholder="Enter email" formControlName="registerEmail"  required email>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-2" for="registerName">Name:</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="registerName" placeholder="Enter name" formControlName="registerName" required>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-2" for="registerPwd">Pwd:</label>
+                          <div class="col-sm-10">
+                            <input type="password" class="form-control" id="registerPwd" placeholder="Enter password" formControlName="registerPwd" required>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal fade" id="loginModal" role="dialog" #loginModal>
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <div class="panel panel-default">
+                  <div class="panel-heading text-center">Register</div>
+                  <div class="panel-body">
+                    <div class="col-sm-6">
+                      <form [formGroup]="loginForm" class="form-horizontal" (ngSubmit)="onSubmitLogin()">
+                        <div class="form-group">
+                          <label class="control-label col-sm-2" for="loginEmail">Email:</label>
+                          <div class="col-sm-10">
+                            <input type="email" class="form-control" id="loginEmail" placeholder="Enter email" formControlName="loginEmail" required email>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="control-label col-sm-2" for="loginPwd">Pwd:</label>
+                          <div class="col-sm-10">
+                            <input type="password" class="form-control" id="loginPwd" placeholder="Enter password" formControlName="loginPwd" required>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+      </div>
+      </div>
+      </div>
+  </nav>
+</div>
