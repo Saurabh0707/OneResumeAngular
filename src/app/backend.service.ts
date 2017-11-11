@@ -36,18 +36,20 @@ export class BackendService{
     console.log(this.loginResponse.access_token);
     this.storage.clear('storedsession');
     this.loggedIn = false;
-    const headers = new Headers({'Authorization': 'Bearer '+this.loginResponse.access_token});
+    const headers = new Headers({'Authorization': 'Bearer ' + this.loginResponse.access_token});
     console.log(headers);
     return this.http.get(this.base_url + 'logout', {headers: headers});
   }
   onLogin(value) {
     console.log(value);
     this.loginResponse = value;
+    this.loggedIn = true;
     this.storage.store('storedsession', value);
   }
   onRegister(value) {
     console.log(value);
     this.loginResponse = value;
+    this.loggedIn = true;
     this.storage.store('storedsession', value);
   }
   showGithubData(){

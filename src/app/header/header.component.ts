@@ -20,11 +20,12 @@ export class HeaderComponent implements OnInit {
   @ViewChild ('registerModal') registerModal: ElementRef;
 
   ngOnInit() {
-    if(this.backendService.isAuthenticated()===true){
+    if(!this.backendService.isAuthenticated() === true || this.backendService.loggedIn ===false){
+      this.loggedIn = false;
+
+    }else {
       this.loggedIn = true;
       this.backendService.loginResponse = this.storage.retrieve('storedsession');
-    }else {
-      this.loggedIn = false;
     }
     this.registerForm = new FormGroup({
       'registerName': new FormControl(null, Validators.required),
@@ -68,7 +69,7 @@ export class HeaderComponent implements OnInit {
           console.log(response.json());
           this.loggedIn = false;
           this.router.navigate(['/'], {relativeTo: this.route});
-          return this.backendService.onLogin(null);
+          return this.backendService.logout();
         },
         (error) => {
           console.log(error),
@@ -76,13 +77,17 @@ export class HeaderComponent implements OnInit {
         });
   }
   onSubmitRegister() {
-    this.backendService.register(JSON.stringify(this.registerForm.value))
+    const sendJson  = (JSON.parse(JSON.stringify(this.registerForm.value)));
+    sendJson['client_id'] = '10';
+    sendJson['client_secret'] = '8Z4E1j4LKRtIG5tljx3XyS0Mh5bvqLNM0npgUonU';
+
+    this.backendService.register(JSON.stringify(sendJson))
       .subscribe(
         (response) => {
           this.registerForm.reset();
           this.loggedIn = true;
           this.backendService.onRegister(response.json());
-          $(this.loginModal.nativeElement).modal('hide');
+          $(this.registerModal.nativeElement).modal('hide');
           this.router.navigate(['/'], {relativeTo: this.route});
         },
         (error) => {
