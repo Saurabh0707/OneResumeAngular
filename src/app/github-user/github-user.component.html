@@ -4,28 +4,30 @@
       <div class="panel-heading text-center">Github User</div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-sm-12" *ngFor="let thisOneResumeUser of OneResumeUser ">
-            <h2>{{thisOneResumeUser?.username}}</h2>
-            <h3>Username: {{thisOneResumeUser?.name}}</h3>
-            <h5>Company: {{thisOneResumeUser?.company}}</h5>
-            <h5>Created At: {{thisOneResumeUser?.created_at}}</h5>
-            <h5>Updated At: {{thisOneResumeUser?.updated_at}}</h5>
-            <h5>Public Gists: {{thisOneResumeUser?.public_gists}}</h5>
-            <h5>Public Repositories: {{thisOneResumeUser?.public_gists}}</h5>
-            <h5>Location: {{thisOneResumeUser?.location}}</h5>
-            <h5>Navigate: <a  href="{{thisOneResumeUser?.html_url}}">{{thisOneResumeUser?.html_url}}</a></h5>
-          </div>
-          <hr>
-          <div class="col-md-5">
+            <div class="col-sm-12 text-center" *ngFor="let thisOneResumeUser of OneResumeUser ">
+              <h2>{{thisOneResumeUser?.username}}</h2>
+              <h3>Username: {{thisOneResumeUser?.name}}</h3>
+              <h5>Company: {{thisOneResumeUser?.company}}</h5>
+              <h5>Created At: {{thisOneResumeUser?.created_at}}</h5>
+              <h5>Updated At: {{thisOneResumeUser?.updated_at}}</h5>
+              <h5>Public Gists: {{thisOneResumeUser?.public_gists}}</h5>
+              <h5>Public Repositories: {{thisOneResumeUser?.public_gists}}</h5>
+              <h5>Location: {{thisOneResumeUser?.location}}</h5>
+              <h5>Navigate: <a  href="{{thisOneResumeUser?.html_url}}">{{thisOneResumeUser?.html_url}}</a></h5>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-5">
               <h4 class="text-center">Your Repositories</h4>
               <app-repo-list></app-repo-list>
-          </div>
+            </div>
 
-          <div class="col-md-7">
+            <div class="col-md-7">
               <router-outlet></router-outlet>
-          </div>
+            </div>
         </div>
       </div>
+      </div>
     </div>
-  </div>
 </div>

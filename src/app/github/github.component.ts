@@ -13,18 +13,26 @@ export class GithubComponent implements OnInit {
   loggedIn= false;
   OneResumeResponse;
   errorResponse;
-
+  noUser = false;
   ngOnInit() {
-    if(this.backendService.isAuthenticated()===true){
+    if (this.backendService.isAuthenticated() === true) {
       this.loggedIn = true;
-    }else this.loggedIn = false;
-    if(this.loggedIn === true) {
+    } else this.loggedIn = false;
+    if (this.loggedIn === true) {
       this.backendService.showGithubData()
         .subscribe(
           (response) => {
             this.OneResumeResponse = <string>response.json().data.userRepoData;
-            this.backendService.setOneResumeResponse(this.OneResumeResponse);
-             },
+            console.log(this.OneResumeResponse.githubusers);
+            if (this.OneResumeResponse.githubusers == '') {
+                this.noUser = true;
+                console.log(this.noUser);
+            }else {
+              this.noUser = false;
+              console.log(this.noUser);
+              this.backendService.setOneResumeResponse(this.OneResumeResponse);
+            }
+          },
           (error) => {
             this.errorResponse = error.json();
             console.log(this.errorResponse.error);
@@ -37,4 +45,14 @@ export class GithubComponent implements OnInit {
         );
     }
   }
+  getUserFromGithub(){
+    this.backendService.makeGithubRequest()
+      .subscribe(
+        (response) => {
+          console.log(response.json());
+        },
+        (error) => {console.log(error);}
+      );
+  }
+
 }

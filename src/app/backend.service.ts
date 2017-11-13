@@ -69,4 +69,7 @@ export class BackendService{
   setOneResumeUser(OneResumeUser) {
     this.OneResumeUser = OneResumeUser;
   }
+  makeGithubRequest() {
+    return this.http.get(this.base_url + 'user/github');
+  }
 }

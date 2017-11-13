@@ -12,7 +12,6 @@ export class GithubUserComponent implements OnInit {
   username;
   errorResponse;
   OneResumeUser;
-
   constructor(private backendService: BackendService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -45,5 +44,9 @@ export class GithubUserComponent implements OnInit {
         );
     }
   }
+
+  // getUserFromGithub(){
+  //   this.backendService.makeGithubRequest();
+  // }
 
 }

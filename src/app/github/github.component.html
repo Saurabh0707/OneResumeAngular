@@ -5,21 +5,34 @@
       <div class="panel-body">
         <div class="row">
           <div class="col-sm-12">
-            <h3>Hi, {{OneResumeResponse?.name}}</h3>
-            <p>{{OneResumeResponse?.email}}</p>
-            <ul>
-              <ol>
-                <a [routerLink]="['/github', githubusers?.username]" *ngFor="let githubusers of OneResumeResponse?.githubusers">
-                  <h4>User Name: {{githubusers.username}}</h4>
-                  <p>Name: {{githubusers.name}}</p>
-                  <p>Company: {{githubusers.company}}</p>
-                  <p>Location: {{githubusers.location}}</p>
-                  <p>Public Repositories: {{githubusers.public_repos}}</p>
-                  <p>Public Gists: {{githubusers.Public_gists}}</p>
-                <hr>
-                </a>
-              </ol>
-          </ul>
+            <div class="text-center">
+              <h3>Hi, {{OneResumeResponse?.name}}</h3>
+              <p>{{OneResumeResponse?.email}}</p>
+            </div>
+            <hr>
+            <div class="row" *ngIf="noUser==false" >
+              <ul *ngFor="let githubusers of OneResumeResponse?.githubusers">
+                <li>
+                  <a [routerLink]="['/github', githubusers?.username]">
+                    <h4>User Name: {{githubusers.username}}</h4>
+                    <p>Name: {{githubusers.name}}</p>
+                    <p>Company: {{githubusers.company}}</p>
+                    <p>Location: {{githubusers.location}}</p>
+                    <p>Public Repositories: {{githubusers.public_repos}}</p>
+                    <p>Public Gists: {{githubusers.Public_gists}}</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="row" *ngIf="noUser==true">
+              <div class="alert-success col-sm-8 col-sm-offset-2">You Have Not Yet Added Any Github User</div>
+            </div>
+            <hr>
+            <div class="row">
+               <div class="col-sm-4 col-sm-offset-4 text-center" >
+                 <button type="button" class="btn btn-primary" (click)="getUserFromGithub()">Add User</button>
+               </div>
+             </div>
           </div>
         </div>
       </div>
