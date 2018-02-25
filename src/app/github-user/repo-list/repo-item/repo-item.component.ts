@@ -11,5 +11,6 @@ export class RepoItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.repo);
   }
 }

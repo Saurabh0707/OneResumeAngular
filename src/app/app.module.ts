@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -19,6 +18,7 @@ import { GithubUserComponent } from './github-user/github-user.component';
 import { RepoListComponent } from './github-user/repo-list/repo-list.component';
 import { RepoItemComponent } from './github-user/repo-list/repo-item/repo-item.component';
 import { RepoDetailsComponent } from './github-user/repo-details/repo-details.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { RepoDetailsComponent } from './github-user/repo-details/repo-details.co
     RepoListComponent,
     RepoItemComponent,
     RepoDetailsComponent,
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,

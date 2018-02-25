@@ -1,8 +1,316 @@
+<div class="col-sm-12 text-right" id="printResumeBtn">
+  <button class="btn btn-success" (click)="printResume()">Print Resume</button>
+</div>
 <div class="row">
-  <div class="col-sm-8 col-sm-offset-2">
-    <div class="panel panel-default">
-      <div class="panel-heading text-center">Resume</div>
-      <div class="panel-body">Panel Content</div>
+  <div class="col-sm-10 col-sm-offset-1">
+      <div>
+        <div class="row" id="print-section">
+            <div class="col-sm-12 text-center" id="introduction">
+              <h2>{{OneResumeResponse?.name}}</h2>
+              <p>{{OneResumeResponse?.email}}</p>
+              <p>{{OneResumeResponse?.location}}</p>
+              <hr>
+            </div>
+          <div class="col-sm-12" style="padding-top: 2vh">
+            <div class="col-sm-12 text-center" id="education-heading">
+              <h3>Education</h3>
+            </div>
+            <div class="col-sm-12" id="education_individual">
+              <ul *ngFor="let githubusers of OneResumeResponse?.educations">
+                <li>{{ githubusers?.college}}<i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i></li>
+              </ul>
+              <div (click)="addEducation()" class="adding">+ Add Education</div>
+              <div class="modal fade" id="addEduModal" role="dialog" #addEduModal>
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <button type="button" class="close" data-dismiss="modal" style="opacity: 1;" (click)="refreshEducation()"><span aria-hidden="true"  style="color: white">×</span></button>
+                      <h4 class="modal-title">Add Education</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 5% 5% 8% 5%;">
+                      <div class="text-center" *ngIf="noEducation">
+                        <button type="button" class="btn btn-outline-dark" (click)="openAddGraduation()">Graduation</button>
+                        <button type="button" class="btn btn-outline-dark" (click)="openAddPostGraduation()">Post Graduation</button>
+                        <button type="button" class="btn btn-outline-dark" (click)="openAddDiploma()">Diploma</button>
+                        <button type="button" class="btn btn-outline-dark" (click)="openAddPhD()">PhD</button>
+                      </div>
+                      <div *ngIf="!noEducation">
+                        <form [formGroup]="educationDegreeForm" (ngSubmit)="onEducationSubmit()">
+                          <p class="text-center" *ngIf="graduation">Add your graduation here!!</p>
+                          <p class="text-center" *ngIf="postGraduation">Add your post graduation here!!</p>
+                          <p class="text-center" *ngIf="diploma">Add your diploma here!!</p>
+                          <p class="text-center" *ngIf="phd">Add your PhD here!!</p>
+                             <div class="form-group">
+                              <label for="college">College</label>
+                              <input type="text" class="form-control" id="college" placeholder="College" formControlName="college">
+                            </div>
+                            <div class="form-group">
+                              <label for="degree">Degree</label>
+                              <input type="text" class="form-control" id="degree" placeholder="Degree" formControlName="degree">
+                            </div>
+                            <div class="form-group">
+                              <label for="stream">Stream</label>
+                              <input type="text" class="form-control" id="stream" placeholder="Stream" formControlName="stream">
+                            </div>
+                            <div class="form-inline">
+                              <div class="form-group">
+                                <label for="educationFromDiv">From</label>
+                                <!--<input type="text" class="form-control" id="collegeFrom" placeholder="Jane Doe">-->
+                                <div class='input-group date' id="educationFromDiv">
+                                  <input type='date' class="form-control" id='educationFrom' formControlName="educationFrom"/>
+                                  <span class="input-group-addon">
+                                     <i class="fa fa-calendar-o"></i>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="educationTo">To</label>
+                                <div class='input-group date' id='educationToDiv'>
+                                  <input type='date' class="form-control" id='educationTo' formControlName="educationTo"/>
+                                  <span class="input-group-addon">
+                                    <i class="fa fa-calendar-o"></i>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                              <div class="form-group"  style="padding-top: 2vh;">
+                                <label for="marks">Marks</label>
+                                <input type="text" class="form-control" id="marks" placeholder="0.00" formControlName="marks">
+                                <p class="help-block" style="color: red;">* Calculate marks in percentage.</p>
+                                <br>
+                              </div>
+                            <br>
+                            <input
+                              name="submit"
+                              class="btn btn-primary pull-right"
+                              id="additional-detail4-submit"
+                              value="Save"
+                              type="submit"
+                              style="display: block;"
+                              style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
+                            <br>
+                          </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12" style="padding-top: 2vh">
+            <div class="col-sm-12 text-center" id="work-heading">
+              <h3>Work</h3>
+            </div>
+            <div class="col-sm-12" id="work_individual">
+              <ul *ngFor="let githubusers of OneResumeResponse?.works">
+                <li>{{ githubusers?.organisation}}<i class="fa fa-trash-o pull-right" (click)="deleteWork(githubusers?.id)"></i></li>
+              </ul>
+              <div (click)="addWork()" class="adding">+ Add Work</div>
+              <div class="modal fade" id="addWorkModal" role="dialog" #addWorkModal>
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <button type="button" class="close" data-dismiss="modal" style="opacity: 1"><span aria-hidden="true"  style="color: white">×</span></button>
+                      <h4 class="modal-title">Add Work</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 5% 5% 8% 5%;">
+                      <form [formGroup]="workForm" (ngSubmit)="onWorkSubmit()">
+                        <p class="text-center">Add your work here!!</p>
+                        <div class="form-group">
+                          <label for="positionOfWOrk">Position</label>
+                          <input type="text" class="form-control" formControlName="positionOfWork" id="positionOfWork" placeholder="Position">
+                        </div>
+                        <div class="form-group">
+                          <label for="company">Organisation</label>
+                          <input type="text" class="form-control" formControlName="company" id="company" placeholder="Company">
+                        </div>
+                        <div class="form-group">
+                          <label for="location">Location</label>
+                          <input type="text" class="form-control" formControlName="location" id="location" placeholder="Location">
+                          <!--<p class="help-block">Example block-level help text here.</p>-->
+                        </div>
+                        <div class="form-inline row">
+                          <div class="form-group col-sm-4">
+                            <label for="workFrom">From</label>
+                            <!--<input type="text" class="form-control" id="from" placeholder="Jane Doe">-->
+                            <div class='input-group date' id='workFromDiv'>
+                              <input type='date' class="form-control" id="workFrom" formControlName="workFrom"/>
+                              <span class="input-group-addon">
+                                     <i class="fa fa-calendar-o"></i>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="form-group col-sm-4 col-sm-offset-2">
+                            <label for="workTo">To</label>
+                            <!--<input type="email" class="form-control" id="to" placeholder="jane.doe@example.com">-->
+                            <div class='input-group date' id='workToDiv'>
+                              <input type='date' class="form-control" id="workTo" formControlName="workTo"/>
+                              <span class="input-group-addon">
+                                     <i class="fa fa-calendar-o"></i>
+                                  </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group"  style="padding-top: 2vh;">
+                          <label for="workDesc">Description</label>
+                          <textarea
+                            style="font-size: small; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: darkgrey;"
+                            class="form-control"
+                            rows="5"
+                            cols="50"
+                            placeholder="Add description here (Max 250 characters)"
+                            id="workDesc"
+                            formControlName="workDesc"
+                            name="description"></textarea>
+                        </div>
+                          <input
+                            name="submit"
+                            class="btn btn-primary pull-right"
+                            id="additional-detail3-submit"
+                            value="Save"
+                            type="submit"
+                            style="display: block;"
+                            style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
+                          <br>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="col-sm-12" style="padding-top: 2vh">
+              <div class="col-sm-12 text-center" id="project-heading">
+                <h3>Projects</h3>
+              </div>
+              <hr>
+              <div class="col-sm-12" id="projects_individual">
+                <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
+                  <div *ngFor="let githubrepos of githubusers?.githubrepos">
+                      <div
+                        style="cursor: pointer">
+                        <div class="projects_individual">
+                          <h4 style="text-decoration: underline;">{{githubrepos?.name}}</h4>
+                          <div class="col-sm-12" style="border-radius: 2px;"><p><strong>Descripition: </strong>{{githubrepos?.description}}</p></div>
+                          <div class="col-sm-3" style="border-radius: 2px;"><p><strong>Commits: </strong>{{githubrepos?.no_of_commits}}</p></div>
+                          <div class="col-sm-3"><p><strong>Pull Requests: </strong>{{githubrepos?.no_of_pullrequests}}</p></div>
+                          <div class="col-sm-3"><p><strong>Contributors: </strong>{{githubrepos?.no_of_contributors}}</p></div>
+                          <div class="col-sm-3"><p><strong>Branches: </strong>{{githubrepos?.no_of_branches}}</p></div>
+                          <div class="col-sm-12"><p><strong>Languages: </strong><p>
+                            <ul style="text-align: left" *ngFor="let repolangs of githubrepos?.repolangs">
+                              <li>{{repolangs?.name}}</li>
+                            </ul>
+                          </div>
+                          <div class="col-sm-12"><strong>Navigate: </strong><a href="{{githubrepos?.html_url}}" target="_blank">{{githubrepos?.html_url}}</a></div>
+                        </div>
+                        <br><br>
+                        <!--<button type="button" class="btn btn-success" (click)="addProject()"><i class="fas fa-plus"></i> Add Projects</button>-->
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <hr>
+            </div>
+            <div class="col-sm-12" style="padding-top: 2vh">
+              <div class="col-sm-12 text-center" id="skill-heading">
+                <h3>Skills</h3>
+              </div>
+              <div class="col-sm-12" id="skills_individual">
+                <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
+                  <div *ngFor="let githubrepos of githubusers?.githubrepos">
+                    <ul *ngFor="let repolangs of githubrepos?.repolangs" style="text-align: left">
+                      <li>{{repolangs.name}}</li>
+                    </ul>
+                    <ul *ngFor="let githubusers of OneResumeResponse?.skills">
+                      <li>{{ githubusers?.skill}}<i class="fa fa-trash-o pull-right" (click)="deleteSkill(githubusers?.id)"></i></li>
+                    </ul>
+                  </div>
+                </div>
+                <div (click)="addSkill()" class="adding">+ Add Skills</div>
+                <div class="modal fade" id="addSkillModal" role="dialog" #addSkillModal>
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal"  style="opacity: 1"><span aria-hidden="true"  style="color: white">×</span></button>
+                        <h4 class="modal-title">Add Skill</h4>
+
+                      </div>
+                      <div class="modal-body" style="padding: 8% 5% 8% 5%">
+                        <form [formGroup]="skillForm" (ngSubmit)="onSkillSubmit()">
+                        <div class="form-group" style="font-size: small; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: darkgrey;">
+                          <label for="inputSkill">You Skill Here</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="inputSkill"
+                            id="inputSkill"
+                            style="font-size: small; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: darkgrey;"
+                            placeholder="Add Skill">
+                        </div>
+                        <input
+                          name="submit"
+                          class="btn btn-primary pull-right"
+                          id="additional-detail2-submit"
+                          value="Save"
+                          type="submit"
+                          style=" display: block; border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
+                        <br>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="col-sm-12" style="padding-top: 2vh">
+            <div class="col-sm-12 text-center" id="achievements-heading">
+              <h3>Achievements</h3>
+            </div>
+            <div class="col-sm-12" id="achievements_individual">
+              <ul *ngFor="let githubusers of OneResumeResponse?.achievements">
+                <li>{{ githubusers?.achievement}}<i class="fa fa-trash-o pull-right" (click)="deleteAchievement(githubusers?.id)"></i></li>
+               </ul>
+              <div (click)="addAchievement()" class="adding">+ Add Achievement</div>
+              <div class="modal fade" id="addAchModal" role="dialog" #addAchModal>
+                <div class="modal-dialog">
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header text-center">
+                      <button type="button" class="close" data-dismiss="modal" style="opacity: 1"><span aria-hidden="true"  style="color: white">×</span></button>
+                      <h4 class="modal-title">Add Achievement</h4>
+                    </div>
+                    <div class="modal-body" style="padding: 8% 5% 8% 5%">
+                      <p class="text-center" style="font-size: small; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: darkgrey;">Add your achievements here in not more than 250 characters!</p>
+                      <form [formGroup]="achievementForm" (ngSubmit)="onAchievementSubmit()">
+                        <textarea
+                        style="font-size: small; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: darkgrey;"
+                         class="form-control"
+                         rows="5"
+                         cols="50"
+                         placeholder="Add details here (Max 250 characters)"
+                        formControlName="achDesc"
+                         id="achDesc"
+                         name="description"></textarea>
+                      <input
+                        name="submit"
+                        class="btn btn-primary pull-right"
+                        id="additional-detail-submit"
+                        value="Save"
+                        type="submit"
+                        style="display: block;"
+                       style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
+                        <br>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

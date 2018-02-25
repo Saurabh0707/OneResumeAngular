@@ -12,6 +12,7 @@ export class GithubUserComponent implements OnInit {
   username;
   errorResponse;
   OneResumeUser;
+  repos;
   constructor(private backendService: BackendService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -21,30 +22,30 @@ export class GithubUserComponent implements OnInit {
       this.loggedIn = false;
     }
     if (this.loggedIn === true) {
-      this.username = this.route.snapshot.params['username'];
-      this.backendService.showGithubUser(this.username)
-        .subscribe(
-          (response) => {
-            // console.log(response.json());
-            this.OneResumeUser = <string>response.json().data.userRepoData;
-            this.backendService.setOneResumeUser(this.OneResumeUser);
-            this.backendService.setRepos(this.OneResumeUser[0].githubrepos);
-            //////////////////////////////////////
-            console.log(this.backendService.repos);
-          },
-          (error) => {
-            this.errorResponse = error.json();
-            console.log(this.errorResponse.error);
-            if (this.errorResponse.code === 401) {
-              this.backendService.logout();
-              this.loggedIn = false;
-              this.router.navigate(['/']);
+      if (this.OneResumeUser == ''){
+        this.username = this.route.snapshot.params['username'];
+        this.backendService.showGithubUser(this.username)
+          .subscribe(
+            (response) => {
+              this.OneResumeUser = <string>response.json().data.userRepoData;
+              this.backendService.setOneResumeUser(this.OneResumeUser);
+              this.repos = this.OneResumeUser[0].githubrepos;
+            },
+            (error) => {
+              this.errorResponse = error.json();
+              console.log(this.errorResponse.error);
             }
-          }
-        );
-    }
+          );
+      }
+      }
   }
-
+  onNotify(OneResumeUser): void {
+    this.backendService.setOneResumeUser(OneResumeUser);
+    this.OneResumeUser = OneResumeUser;
+    this.repos = this.OneResumeUser[0].githubrepos;
+    console.log(this.OneResumeUser);
+    this.backendService.setRepos(this.repos);
+  }
   // getUserFromGithub(){
   //   this.backendService.makeGithubRequest();
   // }

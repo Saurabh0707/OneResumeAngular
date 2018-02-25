@@ -4,7 +4,7 @@
       <div class="panel-heading text-center">Github</div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12" *ngIf="!pendingResponse">
             <div class="text-center">
               <h3>Hi, {{OneResumeResponse?.name}}</h3>
               <p>{{OneResumeResponse?.email}}</p>
@@ -32,7 +32,10 @@
                <div class="col-sm-4 col-sm-offset-4 text-center" >
                  <button type="button" class="btn btn-primary" (click)="getUserFromGithub()">Add User</button>
                </div>
-             </div>
+            </div>
+            </div>
+          <div class="col-sm-8 col-sm-offset-2 text-center" *ngIf="pendingResponse">
+            <img src="../../assets/img/spinner.gif" class="img-responsive">
           </div>
         </div>
       </div>

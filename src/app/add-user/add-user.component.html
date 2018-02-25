@@ -1,0 +1,110 @@
+<div class="row">
+  <div class="col-sm-9 col-sm-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading text-center">Github</div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-12" id="getTokenFromGithub">
+            <div class="progress" *ngIf="access_token && step1" >
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>
+            </div>
+            <div class="progress" *ngIf="access_token && step2" >
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+            </div>
+            <div class="progress" *ngIf="access_token && step3" >
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+            </div>
+            <div class="progress" *ngIf="access_token && step4" >
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
+            <div class="col-sm-8 col-sm-offset-2 text-center" *ngIf="access_token">
+              <p class="alert alert-success">Your are now linked to your Github Account.
+              </p>
+              <div id="step1" *ngIf="step1 && !pendingResponse">
+                <p>
+                  Do you wish to get your repository data?
+                </p>
+                <button class="btn btn-success" (click)="fetchUserFromGithub()">Yes</button>
+                <button class="btn btn-danger" (click)="denyUserFromGithub()">No</button>
+              </div>
+              <div *ngIf="pendingResponse">
+                <div class="col-sm-8 col-sm-offset-2 text-center">
+                  <img src="../../assets/img/spinner.gif" class="img-responsive">
+                </div>
+              </div>
+              <div id="step2" *ngIf="step2 || step3" class="text-center">
+                <img src="{{githubUserResponse?.user?.avatar_url}}" class="img-responsive img-rounded">
+                <div>
+                  <h2>{{githubUserResponse?.user?.name}}</h2>
+                  <h3>Username: {{githubUserResponse?.user?.login}}</h3>
+                  <h5>Company: {{githubUserResponse?.user?.company}}</h5>
+                  <h5>Created At: {{githubUserResponse?.user?.created_at}}</h5>
+                  <h5>Updated At: {{githubUserResponse?.user?.updated_at}}</h5>
+                  <h5>Public Gists: {{githubUserResponse?.user?.public_gists}}</h5>
+                  <h5>Public Repositories: {{githubUserResponse?.user?.public_repos}}</h5>
+                  <h5>Location: {{githubUserResponse?.user?.location}}</h5>
+                  <h5>Navigate: <a target="_blank" href="{{githubUserResponse?.user?.html_url}}">{{githubUserResponse?.user?.html_url}}</a></h5>
+                  <div *ngIf="step2 && !pendingResponse2">
+                    <button class="btn btn-success" (click)="fetchReposFromGithub()">Sync Repositories</button>
+                    <button class="btn btn-danger" (click)="denyUserFromGithub()">Deny</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="pendingResponse2">
+              <div class="col-sm-8 col-sm-offset-2 text-center">
+                <p style="color: red;">Please do not Reload!!</p>
+                <p style="color: red;">This may take a few minutes!!</p>
+                <img src="../../assets/img/spinner.gif" class="img-responsive">
+              </div>
+            </div>
+            <div *ngIf="step3 && !pendingResponse2" id="step3" class="text-center col-sm-10 col-sm-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">Your Repositories</div>
+                <div class="panel-body">
+                  <p>Check the repositories you want to have in your resume.</p>
+                  <div class="col-sm-12 text-center" *ngFor="let thisgithubReposResponse of  githubReposResponse">
+                    <form [formGroup]="myForm">
+                    <div *ngFor="let thisthisgithubReposResponse of thisgithubReposResponse;">
+                      <fieldset>
+                        <legend>
+                          {{thisthisgithubReposResponse?.thisUserRepo?.name}}
+                        </legend>
+                        <div class="checkbox checkbox-success">
+                          <input
+                            [id] = "thisthisgithubReposResponse?.thisUserRepo?.id"
+                            type="checkbox"
+                            (change)="onChange(thisthisgithubReposResponse?.thisUserRepo,
+                            thisthisgithubReposResponse?.thisUserRepoCommits,
+                            thisthisgithubReposResponse?.thisUserRepoPullRequests,
+                            thisthisgithubReposResponse?.thisUserRepoContributors,
+                            thisthisgithubReposResponse?.thisUserRepoBranches,
+                            thisthisgithubReposResponse?.thisUserRepoLanguages,
+                            $event.target.checked)">
+                          <label [for] = "thisthisgithubReposResponse?.thisUserRepo?.id">
+                            Select This Repository
+                          </label>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <br>
+                    <br>
+                    </form>
+                  </div>
+                  <div>
+                    <button class="btn btn-success" (click)="submitReposFromGithub()">Submit</button>
+                    <button class="btn btn-danger" (click)="denyUserFromGithub()">Deny</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8 col-sm-offset-2 text-center" *ngIf="!access_token">
+              <img src="../../assets/img/spinner.gif" class="img-responsive">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@
       <div class="panel-heading text-center">Github User</div>
       <div class="panel-body">
         <div class="row">
-            <div class="col-sm-12 text-center" *ngFor="let thisOneResumeUser of OneResumeUser ">
+            <div class="col-sm-12 text-center" *ngFor="let thisOneResumeUser of OneResumeUser">
               <h2>{{thisOneResumeUser?.username}}</h2>
               <h3>Username: {{thisOneResumeUser?.name}}</h3>
               <h5>Company: {{thisOneResumeUser?.company}}</h5>
@@ -18,13 +18,12 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-5">
-              <h4 class="text-center">Your Repositories</h4>
-              <app-repo-list></app-repo-list>
+          <h1 class="text-center">Your Repositories</h1>
+          <div class="col-md-5">
+              <app-repo-list (OneResumeUser)="onNotify($event)"></app-repo-list>
             </div>
-
             <div class="col-md-7">
-              <router-outlet></router-outlet>
+              <router-outlet (OneResumeUser)='onNotify($event)'></router-outlet>
             </div>
         </div>
       </div>

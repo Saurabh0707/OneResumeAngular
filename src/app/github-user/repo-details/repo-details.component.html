@@ -1,3 +1,91 @@
-<p>
-  repo-details works!
-</p>
+<div class="row" id="thisRepository">
+    <ul>
+      <li>
+        <strong>Owner: </strong>{{ repo.owner }}
+      </li>
+      <li>
+        <strong>Navigate: </strong><a href="{{ repo.html_url }}" target="_blank">{{ repo.html_url }}</a>
+      </li>
+      <li>
+        <strong>Clone Url: </strong><a href="{{ repo.clone_url }}" target="_blank">{{ repo.clone_url }}</a>
+      </li>
+      <li>
+        <strong>Updated At: </strong>{{ repo.repo_updated_at }}
+      </li>
+      <li>
+        <strong>Created At: </strong>{{ repo.repo_created_at }}
+      </li>
+      <li>
+        <strong>Pushed At: </strong>{{ repo.repo_pushed_at }}
+      </li>
+      <li>
+        <strong>Branches </strong>
+        <div *ngIf="repo.repo_branches !=''">
+        <ol *ngFor="let repoBranch of repo.repobranches">
+          <li style="font-style: italic;">
+            <p class="list-group-item-heading"><strong>Name: </strong>{{repoBranch.name}}</p>
+            <!--<p class="list-group-item-text col-sm-offset-1 col-sm-11"><i>last update at : {{repoBranch.updated_at}}</i></p>-->
+          </li>
+        </ol>
+        </div>
+        <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_branches ==''">Non</p>
+      </li>
+      <li>
+        <strong>Commmits </strong>
+        <div *ngIf="repo.repo_commmits !=''">
+        <ol *ngFor="let repoCommit of repo.repocommits">
+          <li style="font-style: italic;">
+            <p class="list-group-item-heading"><strong>Message: </strong>{{repoCommit.message}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Author: </strong>{{repoCommit.author}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Commmitter: </strong>{{repoCommit.committer}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Created At: </strong>{{repoCommit.commit_created_at}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Updated At: </strong>{{repoCommit.commit_updated_at}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Sha: </strong>{{repoCommit.sha}}</p>
+          </li>
+        </ol>
+        </div>
+        <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_commmits ==''">Non</p>
+      </li>
+      <li>
+        <strong>Contributors </strong>
+        <div *ngIf="repo.repo_contributors !=''">
+        <ol *ngFor="let repoContributors of repo.repocontributors">
+          <li style="font-style: italic;">
+            <p  class="list-group-item-heading"><strong>Name: </strong>{{repoContributors.name}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>No. Of Contributions: </strong>{{repoContributors.contributions}}</p>
+          </li>
+        </ol>
+        </div>
+        <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_contributors ==''">Non</p>
+      </li>
+      <li>
+        <strong>Languages </strong>
+        <ol *ngFor="let repoLang of repo.repolangs">
+          <li style="font-style: italic;">
+            <p  class="list-group-item-heading"><strong>Name: </strong>{{repoLang.name}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Lines: </strong>{{repoLang.lines}}</p>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <strong>Pull Requests </strong>
+        <div *ngIf="repo.repo_p_rs !=''">
+        <ol *ngFor="let repoPR of repo.repo_p_rs">
+          <li style="font-style: italic;">
+            <p  class="list-group-item-heading"><strong>Title: </strong>{{repoPR.title}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Body: </strong>{{repoPR.body}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Assignee: </strong>{{repoPR.assignee}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Creator: </strong>{{repoPR.creator}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>State: </strong>{{repoPR.state}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Created At: </strong>{{repoPR.pr_created_at}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Updated At: </strong>{{repoPR.pr_updated_at}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Merged At: </strong>{{repoPR.pr_merged_at}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Closed At: </strong>{{repoPR.pr_closed_at}}</p>
+            <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Open Issues: </strong>{{repoPR.open_issues}}</p>
+          </li>
+        </ol>
+        </div>
+        <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_p_rs ==''">Non</p>
+      </li>
+    </ul>
+ </div>
