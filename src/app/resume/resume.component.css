@@ -31,6 +31,9 @@
   /*right: 2vm;*/
   /*top: 2vm;*/
 /*}*/
+/*.resume-container{*/
+  /*padding-bottom: 10vh;*/
+/*}*/
 div#projects_individual, div#skills_individual, div#education_individual, div#achievements_individual, div#work_individual{
   padding-left: 3vw;
    /*background-color: lightgrey;*/

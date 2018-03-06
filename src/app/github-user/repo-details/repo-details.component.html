@@ -21,19 +21,19 @@
       <li>
         <strong>Branches </strong>
         <div *ngIf="repo.repo_branches !=''">
-        <ol *ngFor="let repoBranch of repo.repobranches">
+        <ul *ngFor="let repoBranch of repo.repobranches">
           <li style="font-style: italic;">
             <p class="list-group-item-heading"><strong>Name: </strong>{{repoBranch.name}}</p>
             <!--<p class="list-group-item-text col-sm-offset-1 col-sm-11"><i>last update at : {{repoBranch.updated_at}}</i></p>-->
           </li>
-        </ol>
+        </ul>
         </div>
         <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_branches ==''">Non</p>
       </li>
       <li>
         <strong>Commmits </strong>
         <div *ngIf="repo.repo_commmits !=''">
-        <ol *ngFor="let repoCommit of repo.repocommits">
+        <ul *ngFor="let repoCommit of repo.repocommits">
           <li style="font-style: italic;">
             <p class="list-group-item-heading"><strong>Message: </strong>{{repoCommit.message}}</p>
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Author: </strong>{{repoCommit.author}}</p>
@@ -42,35 +42,35 @@
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Updated At: </strong>{{repoCommit.commit_updated_at}}</p>
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Sha: </strong>{{repoCommit.sha}}</p>
           </li>
-        </ol>
+        </ul>
         </div>
         <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_commmits ==''">Non</p>
       </li>
       <li>
         <strong>Contributors </strong>
         <div *ngIf="repo.repo_contributors !=''">
-        <ol *ngFor="let repoContributors of repo.repocontributors">
+        <ul *ngFor="let repoContributors of repo.repocontributors">
           <li style="font-style: italic;">
             <p  class="list-group-item-heading"><strong>Name: </strong>{{repoContributors.name}}</p>
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>No. Of Contributions: </strong>{{repoContributors.contributions}}</p>
           </li>
-        </ol>
+        </ul>
         </div>
         <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_contributors ==''">Non</p>
       </li>
       <li>
         <strong>Languages </strong>
-        <ol *ngFor="let repoLang of repo.repolangs">
+        <ul *ngFor="let repoLang of repo.repolangs">
           <li style="font-style: italic;">
             <p  class="list-group-item-heading"><strong>Name: </strong>{{repoLang.name}}</p>
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Lines: </strong>{{repoLang.lines}}</p>
           </li>
-        </ol>
+        </ul>
       </li>
       <li>
         <strong>Pull Requests </strong>
         <div *ngIf="repo.repo_p_rs !=''">
-        <ol *ngFor="let repoPR of repo.repo_p_rs">
+        <ul *ngFor="let repoPR of repo.repo_p_rs">
           <li style="font-style: italic;">
             <p  class="list-group-item-heading"><strong>Title: </strong>{{repoPR.title}}</p>
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Body: </strong>{{repoPR.body}}</p>
@@ -83,7 +83,7 @@
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Closed At: </strong>{{repoPR.pr_closed_at}}</p>
             <p class="list-group-item-text col-sm-offset-1 col-sm-11"><strong>Open Issues: </strong>{{repoPR.open_issues}}</p>
           </li>
-        </ol>
+        </ul>
         </div>
         <p style="color: red; font-style: italic;" class="list-group-item-text col-sm-offset-1 col-sm-11" *ngIf="repo.repo_p_rs ==''">Non</p>
       </li>

@@ -3,29 +3,37 @@
     <div class="panel panel-default">
       <div class="panel-heading text-center">Github</div>
       <div class="panel-body">
+        <div class="text-center" style="color: #3c763d;" *ngIf="addedNewUser">
+          <h3>New User Is Added</h3>
+        </div>
+        <div class="text-center" style="color: red;" *ngIf="userDeleted">
+          <h3>User Is Deleted</h3>
+        </div>
         <div class="row">
-          <div class="col-sm-12" *ngIf="!pendingResponse">
+          <div class="col-sm-12" *ngIf="!pendingResponse  || !userDeletePending">
             <div class="text-center">
               <h3>Hi, {{OneResumeResponse?.name}}</h3>
               <p>{{OneResumeResponse?.email}}</p>
             </div>
             <hr>
             <div class="row" *ngIf="noUser==false" >
-              <ul *ngFor="let githubusers of OneResumeResponse?.githubusers">
-                <li>
-                  <a [routerLink]="['/github', githubusers?.username]">
-                    <h4>User Name: {{githubusers.username}}</h4>
-                    <p>Name: {{githubusers.name}}</p>
-                    <p>Company: {{githubusers.company}}</p>
-                    <p>Location: {{githubusers.location}}</p>
-                    <p>Public Repositories: {{githubusers.public_repos}}</p>
-                    <p>Public Gists: {{githubusers.Public_gists}}</p>
-                  </a>
-                </li>
-              </ul>
+                <ul *ngFor="let githubusers of OneResumeResponse?.githubusers">
+                  <li>
+                    <a [routerLink]="['/github', githubusers?.username]">
+                      <h4>User Name: {{githubusers.username}}</h4>
+                      <p>Name: {{githubusers.name}}</p>
+                      <p>Company: {{githubusers.company}}</p>
+                      <p>Location: {{githubusers.location}}</p>
+                      <p>Public Repositories: {{githubusers.public_repos}}</p>
+                      <p>Public Gists: {{githubusers.Public_gists}}</p>
+                    </a>
+                    <button class="btn btn-warning"><i class="fa fa-edit pull-right" (click)="updateUser(githubusers?.id)"> Update</i></button>
+                    <button class="btn btn-danger"><i class="fa fa-trash-o pull-right" (click)="deleteUser(githubusers?.id)"> Delete</i></button>
+                  </li>
+                </ul>
             </div>
             <div class="row" *ngIf="noUser==true">
-              <div class="alert-success col-sm-8 col-sm-offset-2">You Have Not Yet Added Any Github User</div>
+              <div class="col-sm-8 col-sm-offset-2 text-center" style="color: #3c763d;"><h4>You Have Not Yet Added Any Github User</h4></div>
             </div>
             <hr>
             <div class="row">
@@ -34,7 +42,7 @@
                </div>
             </div>
             </div>
-          <div class="col-sm-8 col-sm-offset-2 text-center" *ngIf="pendingResponse">
+          <div class="col-sm-8 col-sm-offset-2 text-center" *ngIf="pendingResponse || userDeletePending">
             <img src="../../assets/img/spinner.gif" class="img-responsive">
           </div>
         </div>

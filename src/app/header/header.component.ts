@@ -14,27 +14,28 @@ export class HeaderComponent implements OnInit {
   registerForm: FormGroup;
   loginForm: FormGroup;
   loggedIn= false;
+  unauthenticatedLogin;
   constructor(private backendService: BackendService, private storage: LocalStorageService, private router: Router, private route: ActivatedRoute) { }
 
   @ViewChild ('loginModal') loginModal: ElementRef;
   @ViewChild ('registerModal') registerModal: ElementRef;
 
   ngOnInit() {
+    this.unauthenticatedLogin = false;
     if(!this.backendService.isAuthenticated() === true || this.backendService.loggedIn ===false){
       this.loggedIn = false;
-
     }else {
       this.loggedIn = true;
       this.backendService.loginResponse = this.storage.retrieve('storedsession');
     }
     this.registerForm = new FormGroup({
+      'registerEmail': new FormControl(null, [Validators.required, Validators.email]),
       'registerName': new FormControl(null, Validators.required),
-      'registerEmail': new FormControl(null, Validators.required),
       'registerPwd': new FormControl(null, Validators.required)
     });
     this.loginForm = new FormGroup({
-      'loginEmail': new FormControl(null, Validators.required),
-      'loginPwd': new FormControl(null, Validators.required)
+      'loginEmail': new FormControl(null, [Validators.required, Validators.email]),
+      'loginPwd': new FormControl(null, [Validators.required])
     });
   }
   onSubmitLogin() {
@@ -53,7 +54,15 @@ export class HeaderComponent implements OnInit {
           $(this.loginModal.nativeElement).modal('hide');
           this.router.navigate(['/'], {relativeTo: this.route });
         },
-        (error) => {console.log(error.json()); }
+        (error) => {
+          console.log(error.json());
+          this.loginForm.reset();
+          if(error.json().error == 'invalid_credentials'){
+            this.unauthenticatedLogin = true;
+          }else{
+            this.unauthenticatedLogin = false;
+          }
+        }
       );
   }
   onLogin() {
@@ -94,5 +103,12 @@ export class HeaderComponent implements OnInit {
           console.log(error.json());
         }
       );
+  }
+  validPasswordLength( control: FormControl): {[s: string]: boolean}{
+    if (control.value)  {
+      console.log(control.value.length);
+      return {'Minimum 6 characters required': true};
+    }
+    return null;
   }
 }

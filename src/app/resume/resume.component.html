@@ -1,3 +1,4 @@
+<div class="resume-container">
 <div class="col-sm-12 text-right" id="printResumeBtn">
   <button class="btn btn-success" (click)="printResume()">Print Resume</button>
 </div>
@@ -81,12 +82,14 @@
                                 <br>
                               </div>
                             <br>
-                            <input
+                          <p class="help-block" *ngIf="!educationDegreeForm.valid">All fields are required</p>
+                          <input
                               name="submit"
                               class="btn btn-primary pull-right"
                               id="additional-detail4-submit"
                               value="Save"
                               type="submit"
+                              [disabled] = "!educationDegreeForm.valid"
                               style="display: block;"
                               style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
                             <br>
@@ -165,12 +168,14 @@
                             formControlName="workDesc"
                             name="description"></textarea>
                         </div>
-                          <input
+                        <p class="help-block" *ngIf="!workForm.valid">All fields are required</p>
+                        <input
                             name="submit"
                             class="btn btn-primary pull-right"
                             id="additional-detail3-submit"
                             value="Save"
                             type="submit"
+                            [disabled] = "!workForm.valid"
                             style="display: block;"
                             style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
                           <br>
@@ -181,7 +186,7 @@
               </div>
             </div>
           </div>
-            <div class="col-sm-12" style="padding-top: 2vh">
+            <div class="col-sm-12" style="">
               <div class="col-sm-12 text-center" id="project-heading">
                 <h3>Projects</h3>
               </div>
@@ -190,10 +195,9 @@
                 <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
                   <div *ngFor="let githubrepos of githubusers?.githubrepos">
                       <div
-                        style="cursor: pointer">
+                        style="cursor: pointer; margin-top: 20vh; margin-bottom: 20vh;">
                         <div class="projects_individual">
                           <h4 style="text-decoration: underline;">{{githubrepos?.name}}</h4>
-                          <div class="col-sm-12" style="border-radius: 2px;"><p><strong>Descripition: </strong>{{githubrepos?.description}}</p></div>
                           <div class="col-sm-3" style="border-radius: 2px;"><p><strong>Commits: </strong>{{githubrepos?.no_of_commits}}</p></div>
                           <div class="col-sm-3"><p><strong>Pull Requests: </strong>{{githubrepos?.no_of_pullrequests}}</p></div>
                           <div class="col-sm-3"><p><strong>Contributors: </strong>{{githubrepos?.no_of_contributors}}</p></div>
@@ -203,10 +207,8 @@
                               <li>{{repolangs?.name}}</li>
                             </ul>
                           </div>
-                          <div class="col-sm-12"><strong>Navigate: </strong><a href="{{githubrepos?.html_url}}" target="_blank">{{githubrepos?.html_url}}</a></div>
+                          <div class="col-sm-8 col-sm-offset-2"><strong>Navigate: </strong><a href="{{githubrepos?.html_url}}" target="_blank">{{githubrepos?.html_url}}</a></div>
                         </div>
-                        <br><br>
-                        <!--<button type="button" class="btn btn-success" (click)="addProject()"><i class="fas fa-plus"></i> Add Projects</button>-->
                       </div>
                     </div>
                 </div>
@@ -223,10 +225,10 @@
                     <ul *ngFor="let repolangs of githubrepos?.repolangs" style="text-align: left">
                       <li>{{repolangs.name}}</li>
                     </ul>
-                    <ul *ngFor="let githubusers of OneResumeResponse?.skills">
-                      <li>{{ githubusers?.skill}}<i class="fa fa-trash-o pull-right" (click)="deleteSkill(githubusers?.id)"></i></li>
-                    </ul>
                   </div>
+                  <ul *ngFor="let githubusers of OneResumeResponse?.skills">
+                    <li>{{ githubusers?.skill}}<i class="fa fa-trash-o pull-right" (click)="deleteSkill(githubusers?.id)"></i></li>
+                  </ul>
                 </div>
                 <div (click)="addSkill()" class="adding">+ Add Skills</div>
                 <div class="modal fade" id="addSkillModal" role="dialog" #addSkillModal>
@@ -236,7 +238,6 @@
                       <div class="modal-header text-center">
                         <button type="button" class="close" data-dismiss="modal"  style="opacity: 1"><span aria-hidden="true"  style="color: white">×</span></button>
                         <h4 class="modal-title">Add Skill</h4>
-
                       </div>
                       <div class="modal-body" style="padding: 8% 5% 8% 5%">
                         <form [formGroup]="skillForm" (ngSubmit)="onSkillSubmit()">
@@ -250,12 +251,14 @@
                             style="font-size: small; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: darkgrey;"
                             placeholder="Add Skill">
                         </div>
-                        <input
+                          <p class="help-block" *ngIf="!skillForm.valid">All fields are required</p>
+                          <input
                           name="submit"
                           class="btn btn-primary pull-right"
                           id="additional-detail2-submit"
                           value="Save"
                           type="submit"
+                          [disabled] = "!skillForm.valid"
                           style=" display: block; border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
                         <br>
                         </form>
@@ -294,12 +297,14 @@
                         formControlName="achDesc"
                          id="achDesc"
                          name="description"></textarea>
-                      <input
+                        <p class="help-block" *ngIf="!achievementForm.valid">All fields are required</p>
+                        <input
                         name="submit"
                         class="btn btn-primary pull-right"
                         id="additional-detail-submit"
                         value="Save"
                         type="submit"
+                        [disabled] = "!achievementForm.valid"
                         style="display: block;"
                        style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
                         <br>
@@ -313,4 +318,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

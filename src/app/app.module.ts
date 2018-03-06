@@ -19,6 +19,8 @@ import { RepoListComponent } from './github-user/repo-list/repo-list.component';
 import { RepoItemComponent } from './github-user/repo-list/repo-item/repo-item.component';
 import { RepoDetailsComponent } from './github-user/repo-details/repo-details.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {AuthGuard} from "./auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { AddUserComponent } from './add-user/add-user.component';
     RepoItemComponent,
     RepoDetailsComponent,
     AddUserComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import { AddUserComponent } from './add-user/add-user.component';
     AppRoutingService,
     Ng2Webstorage,
   ],
-  providers: [BackendService],
+  providers: [BackendService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

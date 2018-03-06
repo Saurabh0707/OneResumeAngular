@@ -7,13 +7,12 @@ import {HttpParams} from "@angular/common/http";
 export class BackendService{
 
   base_url = 'http://127.0.0.1:8000/api/';
-  github_redirect_url = 'https://github.com/login/oauth/';
-  // this.apiurl+'logout?token='+token
   loginResponse: {token_type: string, expires_in: string, access_token: string, refresh_token: string};
   OneResumeResponse;
   OneResumeUser;
   loggedIn;
   repos: any;
+  addedNewUser = false;
   constructor(private http: Http, private storage: LocalStorageService) {}
 
   isAuthenticated() {
@@ -72,23 +71,6 @@ export class BackendService{
   setOneResumeUser(OneResumeUser) {
     this.OneResumeUser = OneResumeUser;
   }
-  // makeGithubRequest() {
-  //   const client_id = 'c98f06e52785cdf675ec';
-  //   const redirect_url = 'http://localhost:8000/api/oauth2/github';
-  //   let params = new HttpParams();
-  //   params = params.append('client_id', client_id);
-  //   params = params.append('redirect_uri', redirect_url);
-  //   params = params.append('response_type', 'code');
-  //   params = params.append('scope', '*');
-  //   console.log(params);
-  //   return this.http.get(this.github_redirect_url + 'authorize', {params: params});
-  //   // return this.http.get(this.base_url + 'user/github');
-  // }
-  // getGithubRequest() {
-  //   console.log('backend');
-  //   const getRequest_url = 'http://localhost:8000/api/oauth2/github';
-  //   return this.http.get(getRequest_url);
-  // }
   getRepo(index: number) {
     console.log(this.repos);
     return this.repos[index];
@@ -197,6 +179,20 @@ export class BackendService{
     const headers = new Headers({'Authorization': 'Bearer ' + this.loginResponse.access_token, 'Content-Type': 'application/json'});
     return this.http.get(
       this.base_url + 'deleteAchievement/' + id, { headers: headers}
+    );
+  }
+  onAllSubmit(value: Object) {
+    console.log(value);
+    const headers = new Headers({'Authorization': 'Bearer ' + this.loginResponse.access_token, 'Content-Type': 'application/json'});
+    return this.http.post(
+      this.base_url + 'github/users/store', value,
+      { headers: headers}
+    );
+  }
+  onDeleteUser(id){
+    const headers = new Headers({'Authorization': 'Bearer ' + this.loginResponse.access_token, 'Content-Type': 'application/json'});
+    return this.http.get(
+      this.base_url + 'deleteUser/' + id, { headers: headers}
     );
   }
 }

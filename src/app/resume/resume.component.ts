@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BackendService} from "../backend.service";
 import {Router} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 declare var $: any;
 @Component({
   selector: 'app-resume',
@@ -31,29 +31,29 @@ export class ResumeComponent implements OnInit {
   @ViewChild ('addAchModal') addAchModal: ElementRef;
   ngOnInit() {
       this.educationDegreeForm = new FormGroup({
-      college: new FormControl(null),
-      degree: new FormControl(null),
-      stream: new FormControl(null),
+      college: new FormControl(null, Validators.required),
+      degree: new FormControl(null, Validators.required),
+      stream: new FormControl(null, Validators.required),
       type: new FormControl(null),
-      educationFrom: new FormControl(null),
-      educationTo: new FormControl(null),
-      marks: new FormControl(null),
+      educationFrom: new FormControl(null, Validators.required),
+      educationTo: new FormControl(null, Validators.required),
+      marks: new FormControl(null, Validators.required),
     });
     this.workForm = new FormGroup({
-      'positionOfWork': new FormControl(null),
-      'company': new FormControl(null),
-      'location': new FormControl(null),
-      'workFrom': new FormControl(null),
-      'workTo': new FormControl(null),
-      'workDesc': new FormControl(null),
+      'positionOfWork': new FormControl(null, Validators.required),
+      'company': new FormControl(null, Validators.required),
+      'location': new FormControl(null, Validators.required),
+      'workFrom': new FormControl(null, Validators.required),
+      'workTo': new FormControl(null, Validators.required),
+      'workDesc': new FormControl(null, Validators.required),
     });
 
     this.skillForm = new FormGroup({
-      'inputSkill': new FormControl(null),
+      'inputSkill': new FormControl(null, Validators.required),
     });
 
     this.achievementForm = new FormGroup({
-      'achDesc': new FormControl(null),
+      'achDesc': new FormControl(null, Validators.required),
     });
     if (this.backendService.isAuthenticated() === true) {
       this.loggedIn = true;
@@ -184,6 +184,7 @@ onSkillSubmit() {
         console.log(response.json());
         $(this.addSkillModal.nativeElement).modal('hide');
         this.getAllData();
+        console.log(this.OneResumeResponse);
       },
       (error) => {console.log(error.json()); }
     );

@@ -23,7 +23,7 @@
               </p>
               <div id="step1" *ngIf="step1 && !pendingResponse">
                 <p>
-                  Do you wish to get your repository data?
+                  Do you wish to get your user data?
                 </p>
                 <button class="btn btn-success" (click)="fetchUserFromGithub()">Yes</button>
                 <button class="btn btn-danger" (click)="denyUserFromGithub()">No</button>
@@ -59,7 +59,7 @@
                 <img src="../../assets/img/spinner.gif" class="img-responsive">
               </div>
             </div>
-            <div *ngIf="step3 && !pendingResponse2" id="step3" class="text-center col-sm-10 col-sm-offset-1">
+            <div *ngIf="(step3 && !pendingResponse2)" id="step3" class="text-center col-sm-10 col-sm-offset-1">
               <div class="panel panel-default">
                 <div class="panel-heading">Your Repositories</div>
                 <div class="panel-body">
@@ -72,19 +72,18 @@
                           {{thisthisgithubReposResponse?.thisUserRepo?.name}}
                         </legend>
                         <div class="checkbox checkbox-success">
-                          <input
+                          <button
+                            class="btn btn-info"
+                            class="btn btn-info"
                             [id] = "thisthisgithubReposResponse?.thisUserRepo?.id"
                             type="checkbox"
-                            (change)="onChange(thisthisgithubReposResponse?.thisUserRepo,
+                            (click)="pushRepoToArray(thisthisgithubReposResponse?.thisUserRepo,
                             thisthisgithubReposResponse?.thisUserRepoCommits,
                             thisthisgithubReposResponse?.thisUserRepoPullRequests,
                             thisthisgithubReposResponse?.thisUserRepoContributors,
                             thisthisgithubReposResponse?.thisUserRepoBranches,
-                            thisthisgithubReposResponse?.thisUserRepoLanguages,
-                            $event.target.checked)">
-                          <label [for] = "thisthisgithubReposResponse?.thisUserRepo?.id">
-                            Select This Repository
-                          </label>
+                            thisthisgithubReposResponse?.thisUserRepoLanguages)">
+                            Push</button>
                         </div>
                       </fieldset>
                     </div>
@@ -94,12 +93,12 @@
                   </div>
                   <div>
                     <button class="btn btn-success" (click)="submitReposFromGithub()">Submit</button>
-                    <button class="btn btn-danger" (click)="denyUserFromGithub()">Deny</button>
+                    <button class="btn btn-danger" (click)="denySubmitFromGithub()">Deny</button>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-sm-8 col-sm-offset-2 text-center" *ngIf="!access_token">
+            <div class="col-sm-8 col-sm-offset-2 text-center" *ngIf="!access_token || (step4 && submitAllDataPending)">
               <img src="../../assets/img/spinner.gif" class="img-responsive">
             </div>
           </div>
