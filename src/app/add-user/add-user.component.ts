@@ -11,6 +11,7 @@ export class AddUserComponent implements OnInit {
   constructor( private _fb: FormBuilder, private backendService: BackendService,
                private router: Router, private activatedRoute: ActivatedRoute) { }
   loggedIn = false;
+  update = false;
   errorResponse;
   request_code;
   access_token = '';
@@ -26,16 +27,19 @@ export class AddUserComponent implements OnInit {
   i;
   submitAllDataPending;
   ngOnInit() {
+    this.update = false;
     this.submitAllDataPending = false;
     this.i = 0;
+    // if(this.backendService.updateUser){
+    //   console.log(this.backendService.updateUser);
+      // this.update = true;
+    // }
     this.activatedRoute.queryParams.subscribe((queryParams: Params) => {
       this.request_code = queryParams['code'];
       console.log(queryParams['code']);
     });
     this.myForm = this._fb.group({
       'userRepoData' : this._fb.group({
-        // 'name': new FormControl(null),
-        // 'email': new FormControl(null),
         'githubusers': this._fb.group({
           'username': null,
           'html_url': null,
@@ -70,15 +74,7 @@ export class AddUserComponent implements OnInit {
         }),
       }),
     });
-
-    // if (this.backendService.isAuthenticated() === true) {
-    //   this.loggedIn = true;
-    // } else {
-    //   this.loggedIn = false;
-    // }
-
-    // if (this.loggedIn === true) {
-      this.backendService.getRequest(this.request_code)
+    this.backendService.getRequest(this.request_code)
         .subscribe(
           (response: any) => {
             if (response._body.substr(0, 12) == 'access_token') {
@@ -120,12 +116,18 @@ export class AddUserComponent implements OnInit {
         );
     // }
   }
-  fetchUserFromGithub(){
+  fetchUserFromGithub() {
     this.pendingResponse = true;
     this.backendService.fetchGithubUser().subscribe(
       (response) => {
         console.log(response.json());
         this.githubUserResponse = <string>response.json().data;
+        // if (this.update == true){
+        //     if ( this.githubUserResponse.user.login  != this.backendService.thisUserToUpdate) {
+        //       this.backendService.wrongUserSelected = true;
+        //       this.denyUserFromGithub();
+        //     }
+        // }
         this.pendingResponse = false;
         this.step1 = false;
         this.step2 = true;
@@ -148,12 +150,15 @@ export class AddUserComponent implements OnInit {
           }),
         });
         console.log(this.myForm.value);
-        },
+      },
       (error) => {
         console.log(error);
       }
     );
   }
+  // fetchUserFromGithub() {
+  //   this.fetchOrUpdate();
+  // }
   denyUserFromGithub(){
     this.backendService.deleteGitHubToken().subscribe(
       (response) => {
@@ -330,6 +335,10 @@ export class AddUserComponent implements OnInit {
             },
           (error) => {
             console.log(error.json());
+            if(error.json().message == 'User Already Exists'){
+              this.backendService.userAlreadyExists = true;
+              this.denySubmitFromGithub();
+            }
           }
         );
     }

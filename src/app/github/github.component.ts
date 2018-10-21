@@ -20,25 +20,29 @@ export class GithubComponent implements OnInit {
   addedNewUser= false;
   userDeleted;
   userDeletePending;
+  wrongUserSelected;
+  userAlreadyExists;
   ngOnInit() {
+    this.userAlreadyExists = false;
     this.userDeletePending = false;
     this.userDeleted = false;
     this.addedNewUser = false;
-    // if (this.backendService.isAuthenticated() === true) {
-    //   this.loggedIn = true;
-    // } else this.loggedIn = false;
-    // if (this.loggedIn === true) {
+    if  (this.backendService.wrongUserSelected == true) {
+      this.wrongUserSelected = true;
+    }
+    if  (this.backendService.userAlreadyExists == true) {
+      this.userAlreadyExists = true;
+    }
       this.addedNewUser = this.backendService.addedNewUser;
       this.getShowGithubData();
-    // }
   }
   getUserFromGithub() {
     const client_id = 'c98f06e52785cdf675ec';
     const redirect_url = 'http://localhost:4200/oauth2/github';
-    window.location.href = this.github_redirect_url + 'authorize?client_id='+ client_id+'&redirect_uri='+redirect_url+'&response_type=code&scope=*';
+    window.location.href = this.github_redirect_url + 'authorize?client_id=' + client_id + '&redirect_uri='+redirect_url+'&response_type=code&scope=*';
   }
   deleteUser(id){
-    console.log(id);
+    console.log('id');
     this.pendingResponse = true;
     this.userDeletePending = true;
     this.backendService.onDeleteUser(id).subscribe(
@@ -51,9 +55,6 @@ export class GithubComponent implements OnInit {
       },
       (error) => {console.log(error.json());}
     );
-  }
-  updateUser(id)  {
-    console.log(id);
   }
   getShowGithubData() {
     this.pendingResponse = true;

@@ -13,7 +13,6 @@ import {AuthGuard} from "./auth-guard.service";
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
-  // {path: 'profile', component: ProfileComponent},
   {path: 'github', canActivate: [AuthGuard], component: GithubComponent},
   {path: 'oauth2/github', component: AddUserComponent},
   {path: 'github/:username', canActivate: [AuthGuard], component: GithubUserComponent, children: [

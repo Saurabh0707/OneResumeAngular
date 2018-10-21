@@ -1,114 +1,160 @@
-<div class="resume-container">
+<div class="resume-container" xmlns="http://www.w3.org/1999/html">
 <div class="col-sm-12 text-right" id="printResumeBtn">
   <button class="btn btn-success" (click)="printResume()">Print Resume</button>
 </div>
 <div class="row">
-  <div class="col-sm-10 col-sm-offset-1">
+    <div class="col-sm-10 col-sm-offset-1">
       <div>
-        <div class="row" id="print-section">
+        <div class="row" id="detailsDisplay">
             <div class="col-sm-12 text-center" id="introduction">
               <h2>{{OneResumeResponse?.name}}</h2>
               <p>{{OneResumeResponse?.email}}</p>
-              <p>{{OneResumeResponse?.location}}</p>
+              <p>{{OneResumeResponse?.githubusers[0].location}}</p>
               <hr>
             </div>
-          <div class="col-sm-12" style="padding-top: 2vh">
-            <div class="col-sm-12 text-center" id="education-heading">
-              <h3>Education</h3>
-            </div>
-            <div class="col-sm-12" id="education_individual">
-              <ul *ngFor="let githubusers of OneResumeResponse?.educations">
-                <li>{{ githubusers?.college}}<i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i></li>
-              </ul>
-              <div (click)="addEducation()" class="adding">+ Add Education</div>
-              <div class="modal fade" id="addEduModal" role="dialog" #addEduModal>
-                <div class="modal-dialog">
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                    <div class="modal-header text-center">
-                      <button type="button" class="close" data-dismiss="modal" style="opacity: 1;" (click)="refreshEducation()"><span aria-hidden="true"  style="color: white">×</span></button>
-                      <h4 class="modal-title">Add Education</h4>
+            <div class="col-sm-12" style="padding-top: 2vh">
+              <div class="col-sm-12 text-center" id="education-heading">
+                <h3>Education</h3>
+              </div>
+              <div class="col-sm-12" id="education_individual">
+                <div *ngFor="let githubusers of OneResumeResponse?.educations">
+                  <div class="card" style="width: 100%;" *ngIf="githubusers?.type == 'phd'">
+                    <div class="card-body">
+                      <h4 class="card-title">{{ githubusers?.college}}</h4>
+                      <i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i>
+                      <p class="card-text">{{ githubusers?.degree}} in {{ githubusers?.stream}}</p>
+                      <h6 class="card-subtitle mb-2 text-muted">{{ githubusers?.from}} - {{ githubusers?.to}}</h6>
+                      <p>Marks - {{ githubusers?.marks}}</p>
                     </div>
-                    <div class="modal-body" style="padding: 5% 5% 8% 5%;">
-                      <div class="text-center" *ngIf="noEducation">
-                        <button type="button" class="btn btn-outline-dark" (click)="openAddGraduation()">Graduation</button>
-                        <button type="button" class="btn btn-outline-dark" (click)="openAddPostGraduation()">Post Graduation</button>
-                        <button type="button" class="btn btn-outline-dark" (click)="openAddDiploma()">Diploma</button>
-                        <button type="button" class="btn btn-outline-dark" (click)="openAddPhD()">PhD</button>
+                  </div>
+                  <div class="card" style="width: 100%;" *ngIf="githubusers?.type == 'post_graduation'">
+                    <div class="card-body">
+                      <h4 class="card-title">{{ githubusers?.college}}</h4>
+                      <i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i>
+                      <p class="card-text">{{ githubusers?.degree}} in {{ githubusers?.stream}}</p>
+                      <h6 class="card-subtitle mb-2 text-muted">{{ githubusers?.from}} - {{ githubusers?.to}}</h6>
+                      <p>Marks - {{ githubusers?.marks}}</p>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 100%;" *ngIf="githubusers?.type == 'graduation'">
+                    <div class="card-body">
+                      <h4 class="card-title">{{ githubusers?.college}}</h4>
+                      <i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i>
+                      <p class="card-text">{{ githubusers?.degree}} in {{ githubusers?.stream}}</p>
+                      <h6 class="card-subtitle mb-2 text-muted">{{ githubusers?.from}} - {{ githubusers?.to}}</h6>
+                      <p>Marks - {{ githubusers?.marks}}</p>
+                    </div>
+                  </div>
+                  <div class="card" style="width: 100%;" *ngIf="githubusers?.type == 'diploma'">
+                    <div class="card-body">
+                      <h4 class="card-title">{{ githubusers?.college}}</h4>
+                      <i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i>
+                      <p class="card-text">{{ githubusers?.degree}} in {{ githubusers?.stream}}</p>
+                      <i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i>
+                      <h6 class="card-subtitle mb-2 text-muted">{{ githubusers?.from}} - {{ githubusers?.to}}</h6>
+                      <p>Marks - {{ githubusers?.marks}}</p>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+                <div (click)="addEducation()" class="adding">+ Add Education</div>
+                <div class="modal fade" id="addEduModal" role="dialog" #addEduModal>
+                  <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header text-center">
+                        <button type="button" class="close" data-dismiss="modal" style="opacity: 1;" (click)="refreshEducation()"><span aria-hidden="true"  style="color: white">×</span></button>
+                        <h4 class="modal-title">Add Education</h4>
                       </div>
-                      <div *ngIf="!noEducation">
-                        <form [formGroup]="educationDegreeForm" (ngSubmit)="onEducationSubmit()">
-                          <p class="text-center" *ngIf="graduation">Add your graduation here!!</p>
-                          <p class="text-center" *ngIf="postGraduation">Add your post graduation here!!</p>
-                          <p class="text-center" *ngIf="diploma">Add your diploma here!!</p>
-                          <p class="text-center" *ngIf="phd">Add your PhD here!!</p>
-                             <div class="form-group">
-                              <label for="college">College</label>
-                              <input type="text" class="form-control" id="college" placeholder="College" formControlName="college">
-                            </div>
-                            <div class="form-group">
-                              <label for="degree">Degree</label>
-                              <input type="text" class="form-control" id="degree" placeholder="Degree" formControlName="degree">
-                            </div>
-                            <div class="form-group">
-                              <label for="stream">Stream</label>
-                              <input type="text" class="form-control" id="stream" placeholder="Stream" formControlName="stream">
-                            </div>
-                            <div class="form-inline">
-                              <div class="form-group">
-                                <label for="educationFromDiv">From</label>
-                                <!--<input type="text" class="form-control" id="collegeFrom" placeholder="Jane Doe">-->
-                                <div class='input-group date' id="educationFromDiv">
-                                  <input type='date' class="form-control" id='educationFrom' formControlName="educationFrom"/>
-                                  <span class="input-group-addon">
-                                     <i class="fa fa-calendar-o"></i>
-                                  </span>
-                                </div>
+                      <div class="modal-body" style="padding: 5% 5% 8% 5%;">
+                        <div class="text-center" *ngIf="noEducation">
+                          <button type="button" class="btn btn-outline-dark" (click)="openAddGraduation()">Graduation</button>
+                          <button type="button" class="btn btn-outline-dark" (click)="openAddPostGraduation()">Post Graduation</button>
+                          <button type="button" class="btn btn-outline-dark" (click)="openAddDiploma()">Diploma</button>
+                          <button type="button" class="btn btn-outline-dark" (click)="openAddPhD()">PhD</button>
+                        </div>
+                        <div *ngIf="!noEducation">
+                          <form [formGroup]="educationDegreeForm" (ngSubmit)="onEducationSubmit()">
+                            <p class="text-center" *ngIf="graduation">Add your graduation here!!</p>
+                            <p class="text-center" *ngIf="postGraduation">Add your post graduation here!!</p>
+                            <p class="text-center" *ngIf="diploma">Add your diploma here!!</p>
+                            <p class="text-center" *ngIf="phd">Add your PhD here!!</p>
+                               <div class="form-group">
+                                <label for="college">College</label>
+                                <input type="text" class="form-control" id="college" placeholder="College" formControlName="college">
                               </div>
                               <div class="form-group">
-                                <label for="educationTo">To</label>
-                                <div class='input-group date' id='educationToDiv'>
-                                  <input type='date' class="form-control" id='educationTo' formControlName="educationTo"/>
-                                  <span class="input-group-addon">
-                                    <i class="fa fa-calendar-o"></i>
-                                  </span>
+                                <label for="degree">Degree</label>
+                                <input type="text" class="form-control" id="degree" placeholder="Degree" formControlName="degree">
+                              </div>
+                              <div class="form-group">
+                                <label for="stream">Stream</label>
+                                <input type="text" class="form-control" id="stream" placeholder="Stream" formControlName="stream">
+                              </div>
+                              <div class="form-inline">
+                                <div class="form-group">
+                                  <label for="educationFromDiv">From</label>
+                                  <!--<input type="text" class="form-control" id="collegeFrom" placeholder="Jane Doe">-->
+                                  <div class='input-group date' id="educationFromDiv">
+                                    <input type='date' class="form-control" id='educationFrom' formControlName="educationFrom"/>
+                                    <span class="input-group-addon">
+                                       <i class="fa fa-calendar-o"></i>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="educationTo">To</label>
+                                  <div class='input-group date' id='educationToDiv'>
+                                    <input type='date' class="form-control" id='educationTo' formControlName="educationTo"/>
+                                    <span class="input-group-addon">
+                                      <i class="fa fa-calendar-o"></i>
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                              <div class="form-group"  style="padding-top: 2vh;">
-                                <label for="marks">Marks</label>
-                                <input type="text" class="form-control" id="marks" placeholder="0.00" formControlName="marks">
-                                <p class="help-block" style="color: red;">* Calculate marks in percentage.</p>
-                                <br>
-                              </div>
-                            <br>
-                          <p class="help-block" *ngIf="!educationDegreeForm.valid">All fields are required</p>
-                          <input
-                              name="submit"
-                              class="btn btn-primary pull-right"
-                              id="additional-detail4-submit"
-                              value="Save"
-                              type="submit"
-                              [disabled] = "!educationDegreeForm.valid"
-                              style="display: block;"
-                              style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
-                            <br>
-                          </form>
+                                <div class="form-group"  style="padding-top: 2vh;">
+                                  <label for="marks">Marks</label>
+                                  <input type="text" class="form-control" id="marks" placeholder="0.00" formControlName="marks">
+                                  <p class="help-block" style="color: red;">* Calculate marks in percentage.</p>
+                                  <br>
+                                </div>
+                              <br>
+                            <p class="help-block" *ngIf="!educationDegreeForm.valid">All fields are required</p>
+                            <input
+                                name="submit"
+                                class="btn btn-primary pull-right"
+                                id="additional-detail4-submit"
+                                value="Save"
+                                type="submit"
+                                [disabled] = "!educationDegreeForm.valid"
+                                style="display: block;"
+                                style="border-radius: 0 !important;; background-color: #1295c9; border-color: #1295c9;">
+                              <br>
+                            </form>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-sm-12" style="padding-top: 2vh">
-            <div class="col-sm-12 text-center" id="work-heading">
+            <div class="col-sm-12" style="padding-top: 2vh">
+              <div class="col-sm-12 text-center" id="work-heading">
               <h3>Work</h3>
             </div>
-            <div class="col-sm-12" id="work_individual">
-              <ul *ngFor="let githubusers of OneResumeResponse?.works">
-                <li>{{ githubusers?.organisation}}<i class="fa fa-trash-o pull-right" (click)="deleteWork(githubusers?.id)"></i></li>
-              </ul>
+              <div class="col-sm-12" id="work_individual">
+              <div  *ngFor="let githubusers of OneResumeResponse?.works">
+                <div class="card" style="width: 100%;">
+                  <div class="card-body">
+                    <h4 class="card-title">{{ githubusers?.position}}</h4>
+                    <h5 class="card-text">{{ githubusers?.organisation}}</h5>
+                    <i class="fa fa-trash-o pull-right" (click)="deleteWork(githubusers?.id)"></i>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ githubusers?.from}} - {{ githubusers?.to}}</h6>
+                    <p style="font-style: italic">{{ githubusers?.description}}</p>
+                  </div>
+                </div>
+                <br>
+              </div>
               <div (click)="addWork()" class="adding">+ Add Work</div>
               <div class="modal fade" id="addWorkModal" role="dialog" #addWorkModal>
                 <div class="modal-dialog">
@@ -185,35 +231,35 @@
                 </div>
               </div>
             </div>
-          </div>
+            </div>
             <div class="col-sm-12" style="">
               <div class="col-sm-12 text-center" id="project-heading">
                 <h3>Projects</h3>
               </div>
-              <hr>
-              <div class="col-sm-12" id="projects_individual">
-                <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
-                  <div *ngFor="let githubrepos of githubusers?.githubrepos">
-                      <div
-                        style="cursor: pointer; margin-top: 20vh; margin-bottom: 20vh;">
-                        <div class="projects_individual">
-                          <h4 style="text-decoration: underline;">{{githubrepos?.name}}</h4>
+              <div class="row">
+                <div class="col-sm-12" id="projects_individual">
+                  <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
+                      <div class="card" style="width: 100%;" *ngFor="let githubrepos of githubusers?.githubrepos">
+                        <div class="card-body">
+                          <h4 class="card-title">{{githubrepos?.name}}</h4>
+                          <p class="text-muted">{{githubrepos?.repo_created_at}} to {{githubrepos?.repo_updated_at}}</p>
+                          <h6 class="card-subtitle mb-2 text-muted"><a href="{{githubrepos?.html_url}}" target="_blank">{{githubrepos?.html_url}}</a></h6>
                           <div class="col-sm-3" style="border-radius: 2px;"><p><strong>Commits: </strong>{{githubrepos?.no_of_commits}}</p></div>
                           <div class="col-sm-3"><p><strong>Pull Requests: </strong>{{githubrepos?.no_of_pullrequests}}</p></div>
                           <div class="col-sm-3"><p><strong>Contributors: </strong>{{githubrepos?.no_of_contributors}}</p></div>
                           <div class="col-sm-3"><p><strong>Branches: </strong>{{githubrepos?.no_of_branches}}</p></div>
-                          <div class="col-sm-12"><p><strong>Languages: </strong><p>
+                          <div class="col-sm-12">
+                            <strong>Languages: </strong>
                             <ul style="text-align: left" *ngFor="let repolangs of githubrepos?.repolangs">
                               <li>{{repolangs?.name}}</li>
                             </ul>
                           </div>
-                          <div class="col-sm-8 col-sm-offset-2"><strong>Navigate: </strong><a href="{{githubrepos?.html_url}}" target="_blank">{{githubrepos?.html_url}}</a></div>
                         </div>
                       </div>
-                    </div>
+                     <br>
+                  </div>
                 </div>
               </div>
-              <hr>
             </div>
             <div class="col-sm-12" style="padding-top: 2vh">
               <div class="col-sm-12 text-center" id="skill-heading">
@@ -221,13 +267,13 @@
               </div>
               <div class="col-sm-12" id="skills_individual">
                 <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
-                  <div *ngFor="let githubrepos of githubusers?.githubrepos">
-                    <ul *ngFor="let repolangs of githubrepos?.repolangs" style="text-align: left">
-                      <li>{{repolangs.name}}</li>
-                    </ul>
-                  </div>
                   <ul *ngFor="let githubusers of OneResumeResponse?.skills">
                     <li>{{ githubusers?.skill}}<i class="fa fa-trash-o pull-right" (click)="deleteSkill(githubusers?.id)"></i></li>
+                  </ul>
+                </div>
+                <div>
+                  <ul *ngFor="let skill of filteredSkills">
+                    <li>{{ skill }}</li>
                   </ul>
                 </div>
                 <div (click)="addSkill()" class="adding">+ Add Skills</div>
@@ -268,7 +314,7 @@
                 </div>
               </div>
             </div>
-          <div class="col-sm-12" style="padding-top: 2vh">
+            <div class="col-sm-12" style="padding-top: 2vh">
             <div class="col-sm-12 text-center" id="achievements-heading">
               <h3>Achievements</h3>
             </div>
@@ -315,8 +361,126 @@
               </div>
             </div>
           </div>
-            </div>
         </div>
+      </div>
+    <div>
+      <div id="print-section" hidden>
+        <div id="introduction2">
+          <h2>{{OneResumeResponse?.name}}</h2>
+          <p>{{OneResumeResponse?.email}}</p>
+          <p>{{OneResumeResponse?.githubusers[0].location}}</p>
+          <hr>
+        </div>
+        <div>
+          <div id="education-heading2">
+            <h1 style="text-decoration: underline">Education</h1>
+          </div>
+          <div id="education_individual2">
+            <ul>
+            <li *ngFor="let githubusers of OneResumeResponse?.educations">
+              <div class="" style="width: 100%;">
+                <div style="padding-left: 5%;">
+                  <h2 class="">{{ githubusers?.college}}</h2>
+                  <i class="fa fa-trash-o pull-right" (click)="deleteEducation(githubusers?.id)"></i>
+                  <p style="color: #777">
+                    {{ githubusers?.from}} to {{ githubusers?.to}}
+                  </p>
+                  <p>
+                  {{ githubusers?.degree}} in {{ githubusers?.stream}}<br>
+                    {{ githubusers?.marks}}<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div id="work-heading2">
+            <h1 style="text-decoration: underline">Work</h1>
+          </div>
+          <div id="work_individual2">
+            <ul>
+            <li  *ngFor="let githubusers of OneResumeResponse?.works">
+              <div class="" style="width: 100%;">
+                <div class="" style="padding-left: 5%">
+                  <h2 class="">{{ githubusers?.position}}</h2>
+                  <i class="fa fa-trash-o pull-right" (click)="deleteWork(githubusers?.id)"></i>
+                  <p>
+                    {{ githubusers?.organisation}}<br>
+                    {{ githubusers?.from}} to {{ githubusers?.to}}<br>
+                    {{ githubusers?.description}}<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div id="project-heading2">
+            <h1 style="text-decoration: underline">Projects</h1>
+          </div>
+          <div>
+            <div id="projects_individual2">
+              <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
+                <ul>
+                <li *ngFor="let githubrepos of githubusers?.githubrepos">
+                  <div style="padding-left: 5%;">
+                    <div class="projects_individual">
+                      <h2>{{githubrepos?.name}}</h2>
+                      <p>{{githubrepos?.repo_created_at}} to {{githubrepos?.repo_updated_at}}</p>
+                      <div style="padding-left: 2%;">
+                      <div class="col-sm-3" style="display: inline-block; padding: 0 4% 0 0"><p><strong>Commits: </strong>{{githubrepos?.no_of_commits}}</p></div>
+                      <div class="col-sm-3" style="display: inline-block; padding: 0 4% 0 4%"><p><strong>Pull Requests: </strong>{{githubrepos?.no_of_pullrequests}}</p></div>
+                      <div class="col-sm-3" style="display: inline-block; padding: 0 4% 0 4%"><p><strong>Contributors: </strong>{{githubrepos?.no_of_contributors}}</p></div>
+                      <div class="col-sm-3" style="display: inline-block; padding: 0 4% 0 4%"><p><strong>Branches: </strong>{{githubrepos?.no_of_branches}}</p></div>
+                      <div class="col-sm-12"><p><strong>Languages: </strong><p>
+                        <ul style="text-align: left" *ngFor="let repolangs of githubrepos?.repolangs">
+                          <li>{{repolangs?.name}}</li>
+                        </ul>
+                      </div>
+                      <div class="col-sm-12"><strong>Navigate: </strong><a href="{{githubrepos?.html_url}}" target="_blank">{{githubrepos?.html_url}}</a></div>
+                    </div>
+                    </div>
+                  </div>
+                  <br>
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div>
+          <div id="skill-heading2">
+            <h1 style="text-decoration: underline">Skills</h1>
+          </div>
+          <div id="skills_individual2">
+            <div *ngFor="let githubusers of OneResumeResponse?.githubusers">
+              <ul *ngFor="let githubusers of OneResumeResponse?.skills">
+                <li>{{ githubusers?.skill}}</li>
+              </ul>
+            </div>
+            <div>
+              <ul *ngFor="let skill of filteredSkills">
+                <li>{{ skill }}<i class="fa fa-trash-o pull-right" (click)="deleteSkill(githubusers?.id)"></i></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div id="achievements-heading2">
+            <h1 style="text-decoration: underline">Achievements</h1>
+          </div>
+          <div id="achievements_individual2">
+            <ul *ngFor="let githubusers of OneResumeResponse?.achievements">
+              <li>{{ githubusers?.achievement}}<i class="fa fa-trash-o pull-right" (click)="deleteAchievement(githubusers?.id)"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
 </div>
 </div>

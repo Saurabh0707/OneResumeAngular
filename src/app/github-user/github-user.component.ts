@@ -46,8 +46,4 @@ export class GithubUserComponent implements OnInit {
     console.log(this.OneResumeUser);
     this.backendService.setRepos(this.repos);
   }
-  // getUserFromGithub(){
-  //   this.backendService.makeGithubRequest();
-  // }
-
 }

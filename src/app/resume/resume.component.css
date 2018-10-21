@@ -1,48 +1,10 @@
-/*body {*/
-  /*background: rgb(204,204,204);*/
-/*}*/
-/*div#page {*/
-  /*background: white;*/
-  /*display: block;*/
-  /*margin: 0 auto;*/
-  /*margin-bottom: 0.5cm;*/
-  /*box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);*/
-/*}*/
-/*div#page[size="A4"] {*/
-  /*width: 21cm;*/
-  /*height: 29.7cm;*/
-/*}*/
-/*div#page[size="A4"][layout="portrait"] {*/
-  /*width: 29.7cm;*/
-  /*height: 21cm;*/
-/*}*/
-/*@media print {*/
-  /*body, div#page {*/
-    /*margin: 0;*/
-    /*box-shadow: 0;*/
-  /*}*/
-/*}*/
-/*div#print-section{*/
-  /*border: solid #666;*/
-  /*border-width: 8px 0 2px 0;*/
-/*}*/
-/*div#printResumeBtn{*/
-  /*position: absolute;*/
-  /*right: 2vm;*/
-  /*top: 2vm;*/
-/*}*/
-/*.resume-container{*/
-  /*padding-bottom: 10vh;*/
-/*}*/
+
 div#projects_individual, div#skills_individual, div#education_individual, div#achievements_individual, div#work_individual{
-  padding-left: 3vw;
-   /*background-color: lightgrey;*/
-}
-div#projects_individual, div#skills_individual, div#education_individual, div#achievements_individual, div#work_individual{
+  /*padding-left: 3vw;*/
   border-radius: 0.5vmax;
   border: 1px solid #dddddd;
-  padding: 20px;
-  }
+  padding: 3vw;
+}
 div#addEduModal div.modal-header{
   background-color: #5cb85c;
   color: white;
@@ -101,3 +63,9 @@ textarea#workDesc{
 .fa-trash-o{
   cursor: pointer;
 }
+/*div#introduction2{*/
+  /*!*margin-left: auto;*!*/
+  /*!*margin-right: auto;*!*/
+  /*!*width: 100%;*!*/
+  /*color: #3c763d;*/
+/*}*/

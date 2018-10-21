@@ -2,7 +2,6 @@ import {Http, Headers} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {LocalStorageService} from 'ng2-webstorage';
 import 'rxjs/Rx';
-import {HttpParams} from "@angular/common/http";
 @Injectable()
 export class BackendService{
 
@@ -13,6 +12,10 @@ export class BackendService{
   loggedIn;
   repos: any;
   addedNewUser = false;
+  wrongUserSelected  = false;
+  updateUser:boolean;
+  thisUserToUpdate;
+  userAlreadyExists = false;
   constructor(private http: Http, private storage: LocalStorageService) {}
 
   isAuthenticated() {
@@ -66,6 +69,7 @@ export class BackendService{
     this.repos = repos;
   }
   setOneResumeResponse(OneResumeResponse) {
+    console.log(this.OneResumeResponse);
     this.OneResumeResponse = OneResumeResponse;
   }
   setOneResumeUser(OneResumeUser) {
@@ -194,5 +198,10 @@ export class BackendService{
     return this.http.get(
       this.base_url + 'deleteUser/' + id, { headers: headers}
     );
+  }
+  updateUserFunction(username){
+    this.updateUser = true;
+    this.thisUserToUpdate = username;
+    console.log(this.updateUser);
   }
 }

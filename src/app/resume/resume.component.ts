@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {BackendService} from "../backend.service";
-import {Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {BackendService} from '../backend.service';
+import {Router} from '@angular/router';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 declare var $: any;
 @Component({
   selector: 'app-resume',
@@ -19,6 +19,7 @@ export class ResumeComponent implements OnInit {
   diploma = false;
   phd = false;
   noEducation = true;
+  filteredSkills;
 
   educationDegreeForm: FormGroup;
   skillForm: FormGroup;
@@ -81,58 +82,55 @@ export class ResumeComponent implements OnInit {
   addAchievement() {
     $(this.addAchModal.nativeElement).modal('show');
   }
- printResume(){
+ printResume()  {
     let printContents, popupWin;
     printContents = document.getElementById('print-section').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
       <html>
-        <head>
-          <title>Print tab</title>          
-        </head>
-    <body onload="window.print();window.close()">${printContents}</body>
+        <body onload="window.print();window.close()">${printContents}</body>
       </html>`
     );
     popupWin.document.close();
   }
-openAddGraduation(){
+openAddGraduation() {
    this.noEducation = false;
    this.graduation = true;
    this.postGraduation  = false;
    this.phd  = false;
    this.diploma  = false;
 }
-openAddPhD(){
+openAddPhD()  {
   this.noEducation = false;
    this.graduation = false;
    this.postGraduation  = false;
    this.phd  = true;
    this.diploma  = false;
 }
-openAddPostGraduation(){
+openAddPostGraduation() {
   this.noEducation = false;
    this.graduation = false;
    this.postGraduation  = true;
    this.phd  = false;
    this.diploma  = false;
 }
-openAddDiploma(){
+openAddDiploma()  {
   this.noEducation = false;
    this.graduation = false;
    this.postGraduation  = false;
    this.phd  = false;
    this.diploma  = true;
 }
-refreshEducation(){
+refreshEducation()  {
   this.noEducation = true;
   this.graduation = false;
   this.postGraduation  = false;
   this.phd  = false;
   this.diploma  = false;
 }
-onEducationSubmit(){
-  if (this.diploma){
+onEducationSubmit() {
+  if (this.diploma) {
     this.educationDegreeForm.patchValue({
       type: 'diploma'
     });
@@ -144,7 +142,7 @@ onEducationSubmit(){
       this.educationDegreeForm.patchValue({
         type: 'post_graduation'
       });
-  } else if (this.phd){
+  } else if (this.phd)  {
     this.educationDegreeForm.patchValue({
       type: 'post_graduation'
     });
@@ -162,7 +160,7 @@ onEducationSubmit(){
       (error) => {console.log(error.json()); }
     );
 }
-onWorkSubmit(){
+onWorkSubmit()  {
  console.log(this.workForm);
   const sendJson  = (JSON.parse(JSON.stringify(this.workForm.value)));
   this.backendService.onWorkSubmit(JSON.stringify(sendJson))
@@ -205,7 +203,7 @@ onAchievementSubmit() {
     );
   }
 
-  getAllData(){
+  getAllData()  {
     this.backendService.showGithubData()
       .subscribe(
         (response) => {
@@ -218,6 +216,16 @@ onAchievementSubmit() {
             this.noUser = false;
             console.log(this.noUser);
             this.backendService.setOneResumeResponse(this.OneResumeResponse);
+            for(let githubUser of this.OneResumeResponse.githubusers) {
+              for(let githubRepo of githubUser.githubrepos){
+                for(let githubLang of githubRepo.repolangs){
+                  if (this.filteredSkills.indexOf(githubLang) != -1)  {
+                    (this.filteredSkills as FormArray).push(githubLang);
+                  }
+                }
+              }
+            }
+            console.log(this.filteredSkills);
           }
         },
         (error) => {
@@ -230,7 +238,7 @@ onAchievementSubmit() {
         }
       );
   }
-  deleteEducation(id){
+  deleteEducation(id) {
     console.log(id);
     this.backendService.onDeleteEducation(id).subscribe(
       (response) => {
@@ -240,7 +248,7 @@ onAchievementSubmit() {
       () => {}
       );
   }
-  deleteWork(id){
+  deleteWork(id)  {
     console.log(id);
     this.backendService.onDeleteWork(id).subscribe(
       (response) => {
@@ -250,7 +258,7 @@ onAchievementSubmit() {
       () => {}
       );
   }
-  deleteSkill(id){
+  deleteSkill(id) {
     console.log(id);
     this.backendService.onDeleteSkill(id).subscribe(
       (response) => {
@@ -260,14 +268,15 @@ onAchievementSubmit() {
       (error) => {console.log(error.json());}
     );
   }
-  deleteAchievement(id){
+  deleteAchievement(id) {
     console.log(id);
     this.backendService.onDeleteAchievement(id).subscribe(
       (response) => {
         console.log(response.json());
         this.getAllData();
       },
-      (error) => {console.log(error.json());}
+      (error) => {console.log(error.json());
+      }
     );
   }
 }
